@@ -1,0 +1,57 @@
+﻿<h3>Регистрация</h3>
+
+<div class="form_auth_submit">
+      <label>Введите имя</label>
+      <input @bind-value="reg_name"  placeholder="Введите имя" required >
+      <br /><br />
+      <label>Введите фамилию</label>
+      <input @bind-value="reg_surname"  placeholder="Введите фамилию" required >
+      <br /><br />
+      <label>Введите почту</label>
+      <input @bind-value="reg_email"  placeholder="Введите почту" required >
+      <br /><br />
+      <label>Введите логин</label>
+      <input @bind-value="reg_login"  placeholder="Введите логин" required >
+      <br /><br />
+      <label>Введите пароль</label>
+      <input @bind-value="reg_pass" placeholder="Введите пароль" required >
+      <br /><br />
+      <label>Повторите пароль</label>
+      <input @bind-value="reg_pass2" placeholder="Введите пароль" required >
+      <br /><br />
+      <button name="regButton" @onclick=Registration>Зарегистрироваться</button>
+      <br /><br />
+</div>
+
+@code {
+    string reg_name;
+    string reg_surname;
+    string reg_email;
+    string reg_login;
+    string reg_pass;
+    string reg_pass2;
+
+    private void Registration()
+    {
+        if(reg_name != "" && reg_name != "" && reg_email != "" 
+            && reg_login != "" && reg_pass != "" && reg_pass2 != "")
+        {
+            if(reg_pass == reg_pass2)
+            {
+
+            }
+            else
+            {
+                //<div class="alert alert-danger" role="alert">
+                //    Passwords dont match!
+                //</div>
+            }
+        }
+        else
+        {
+            //<div class="alert alert-danger" role="alert">
+            //   Not all fields are filled!
+            //</div>
+        }
+    }
+}

@@ -1,0 +1,55 @@
+﻿@using Autorization.Data
+
+@if(!isExist)
+{
+    <h3>Авторизация</h3>
+    <div class="form_auth_block">
+        <label>Введите логин</label>
+        <input @bind-value="auth_login"  placeholder="Введите логин" required >
+        <br /><br />
+        <label>Введите пароль</label>
+        <input type="password" @bind-value="auth_pass" placeholder="Введите пароль" required >
+        <br /><br />
+        <button @onclick=Autorization name="authButton">Войти</button>
+        <button @onclick=Registration name="authButton">Регистрация</button>
+        <br /><br />
+    </div>
+}
+
+
+@if(isExist)
+{
+ 
+}
+
+
+@code {
+    bool isExist = false;
+    string auth_login;
+    string auth_pass;
+    User? user;
+
+    private void Autorization()
+    {
+        if(auth_login != "" && auth_pass != "")
+        {
+            user = UserService.CheckUser();
+
+            if(user != null)
+            {
+
+            }
+            else
+            {
+                
+            }
+        }
+    }
+
+    private void Registration()
+    {
+        <RegistrationComponent />
+    }
+
+}
+
