@@ -1,6 +1,9 @@
-﻿<h3>Регистрация</h3>
+﻿@using Autorization.Data
+@using System;
 
-<div class="form_auth_submit">
+<h3>Регистрация</h3>
+
+<div>
       <label>Введите имя</label>
       <input @bind-value="reg_name"  placeholder="Введите имя" required >
       <br /><br />
@@ -8,7 +11,7 @@
       <input @bind-value="reg_surname"  placeholder="Введите фамилию" required >
       <br /><br />
       <label>Введите почту</label>
-      <input @bind-value="reg_email"  placeholder="Введите почту" required >
+      <input type="email" @bind-value="reg_email"  placeholder="Введите почту" required >
       <br /><br />
       <label>Введите логин</label>
       <input @bind-value="reg_login"  placeholder="Введите логин" required >
@@ -23,6 +26,7 @@
       <br /><br />
 </div>
 
+
 @code {
     string reg_name;
     string reg_surname;
@@ -31,27 +35,35 @@
     string reg_pass;
     string reg_pass2;
 
+
     private void Registration()
     {
-        if(reg_name != "" && reg_name != "" && reg_email != "" 
-            && reg_login != "" && reg_pass != "" && reg_pass2 != "")
+        if(reg_name != null && reg_name != null && reg_email != null 
+            && reg_login != null && reg_pass != null && reg_pass2 != null)
         {
             if(reg_pass == reg_pass2)
             {
-
+                UserService.AddToDatabase(new User(reg_name, reg_surname, reg_email, reg_login, reg_pass));
+                ClearPage();
             }
             else
             {
-                //<div class="alert alert-danger" role="alert">
-                //    Passwords dont match!
-                //</div>
+                Console.WriteLine("Password dont match!");
             }
         }
         else
         {
-            //<div class="alert alert-danger" role="alert">
-            //   Not all fields are filled!
-            //</div>
+            Console.WriteLine("Not all fields are filled!");
         }
+    }
+
+    private void ClearPage()
+    {
+        reg_name = null;
+        reg_surname = null;
+        reg_email = null;
+        reg_login = null;
+        reg_pass = null;
+        reg_pass2 = null;
     }
 }

@@ -1,55 +1,58 @@
 ﻿@using Autorization.Data
+@using System;
+@using System.Collections.Generic
 
-@if(!isExist)
+
+@if(!isRegistration)
 {
     <h3>Авторизация</h3>
-    <div class="form_auth_block">
+    <div>
         <label>Введите логин</label>
-        <input @bind-value="auth_login"  placeholder="Введите логин" required >
+        <input @bind-value="auth_login"  placeholder="Введите логин">
         <br /><br />
         <label>Введите пароль</label>
-        <input type="password" @bind-value="auth_pass" placeholder="Введите пароль" required >
+        <input type="password" @bind-value="auth_pass" placeholder="Введите пароль">
         <br /><br />
         <button @onclick=Autorization name="authButton">Войти</button>
         <button @onclick=Registration name="authButton">Регистрация</button>
         <br /><br />
     </div>
 }
-
-
-@if(isExist)
+else
 {
- 
+    <RegistrationComponent />
 }
 
 
 @code {
-    bool isExist = false;
     string auth_login;
     string auth_pass;
     User? user;
+    bool isRegistration = false;
+    List<User> users = new List<User>();
 
     private void Autorization()
     {
         if(auth_login != "" && auth_pass != "")
         {
-            user = UserService.CheckUser();
+            user = UserService.CheckUser(auth_login, auth_pass);
 
             if(user != null)
             {
-
+                users.Add(user);
+                auth_login = null;
+                auth_pass = null;
             }
             else
             {
-                
+                Console.WriteLine("Wrong login or password!");
             }
         }
     }
 
     private void Registration()
     {
-        <RegistrationComponent />
+        isRegistration = true;
     }
-
 }
 

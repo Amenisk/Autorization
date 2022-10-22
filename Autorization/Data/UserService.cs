@@ -12,7 +12,11 @@ namespace Autorization.Data
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("Users");
             var collection = database.GetCollection<User>("Characters");
-            collection.InsertOne(user);
+            var us = collection.Find(x => x.Login == user.Login).FirstOrDefault<User>();
+            if(us == null)
+            {
+                collection.InsertOne(user);
+            }
         }
 
         public static User CheckUser(string login, string password)
