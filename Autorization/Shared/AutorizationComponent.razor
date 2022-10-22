@@ -16,13 +16,30 @@
         <button @onclick=Autorization name="authButton">Войти</button>
         <button @onclick=Registration name="authButton">Регистрация</button>
         <br /><br />
+
+        <div align="right" width="550 px">
+            <ul>
+                @foreach (var user in users)
+                {
+                    <li>"@user.Name @user.Surname"</li>
+                }
+            </ul>
+        </div>
     </div>
+
+    
+
+    @if (isError)
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+    }
 }
-else
+else if(isRegistration)
 {
     <RegistrationComponent />
 }
-
 
 @code {
     string auth_login;
@@ -30,6 +47,8 @@ else
     User? user;
     bool isRegistration = false;
     List<User> users = new List<User>();
+    bool isError = false;
+    string errorMessage;
 
     private void Autorization()
     {
@@ -42,12 +61,19 @@ else
                 users.Add(user);
                 auth_login = null;
                 auth_pass = null;
+                isError = false;    
             }
             else
             {
-                Console.WriteLine("Wrong login or password!");
+                errorMessage = "Wrong login or password!";
+                isError = true;
             }
         }
+    }
+
+    private void GetCard(User user)
+    {
+
     }
 
     private void Registration()

@@ -8,8 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Shared\AfterAuthoComponent.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MongoDB.Bson" Version="2.18.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\AfterAuthoComponent.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Shared\AfterAuthoComponent.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Shared\AfterAuthoComponent.razor" />
   </ItemGroup>
 
 </Project>
