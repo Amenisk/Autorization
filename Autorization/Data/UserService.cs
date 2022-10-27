@@ -5,21 +5,22 @@ using static MongoDB.Bson.Serialization.Serializers.SerializerHelper;
 
 namespace Autorization.Data
 {
-    static public class UserService
+    public class UserService
     {
-        public static void AddToDatabase(User user)
+        public User CurrentUser { get; set; }
+        public void AddToDatabase(User user)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("Users");
             var collection = database.GetCollection<User>("Characters");
             var us = collection.Find(x => x.Login == user.Login).FirstOrDefault<User>();
-            if(us == null)
+            if (us == null)
             {
                 collection.InsertOne(user);
             }
         }
 
-        public static User CheckUser(string login, string password)
+        public User CheckUser(string login, string password)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("Users");

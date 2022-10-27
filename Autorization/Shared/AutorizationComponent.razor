@@ -1,6 +1,8 @@
 ﻿@using Autorization.Data
 @using System;
 @using System.Collections.Generic
+@inject UserService userService
+@inject ILocalStorageService localStorageService;
 
 
 @if(!isRegistration)
@@ -19,10 +21,7 @@
 
         <div align="right" width="550 px">
             <ul>
-                @foreach (var user in users)
-                {
-                    <li>"@user.Name @user.Surname"</li>
-                }
+                <li>"@userService.CurrentUser.Name @userService.CurrentUser.Surname"</li>
             </ul>
         </div>
     </div>
@@ -44,7 +43,7 @@ else if(isRegistration)
 @code {
     string auth_login;
     string auth_pass;
-    User? user;
+    User user;
     bool isRegistration = false;
     List<User> users = new List<User>();
     bool isError = false;
@@ -54,14 +53,15 @@ else if(isRegistration)
     {
         if(auth_login != "" && auth_pass != "")
         {
-            user = UserService.CheckUser(auth_login, auth_pass);
+            user = userService.CheckUser(auth_login, auth_pass);
 
             if(user != null)
             {
                 users.Add(user);
                 auth_login = null;
                 auth_pass = null;
-                isError = false;    
+                isError = false; 
+                localStorageService.SetAsync<User>("Authorization", user);
             }
             else
             {
